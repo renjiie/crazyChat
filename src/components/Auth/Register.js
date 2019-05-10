@@ -3,6 +3,7 @@ import { Grid, Form, Segment, Button, Header, Message, Icon} from 'semantic-ui-r
 import { Link } from 'react-router-dom'
 import firebase from '../../firebaseConfig';
 import md5 from 'md5';
+
 class Register extends Component{
 	state={
 		username:'',
@@ -11,7 +12,8 @@ class Register extends Component{
 		passwordConfirmation:'',
 		errors:[],
 		loading:false,
-		usersRef: firebase.database().ref('users')
+		usersRef: firebase.database().ref('users'),
+		usernamesRef: firebase.database().ref('usernames')
 	};
 
 	isFormValid = () => {
@@ -24,6 +26,10 @@ class Register extends Component{
 			return false;
 		}else if(!this.isPasswordValid(this.state)){
 			error = { message: 'Password is invalid' };
+			this.setState({ errors: errors.concat(error) });
+			return false;
+		}else if(!this.isUsernameValid(this.state)){
+			error = { message: 'Username already taken' };
 			this.setState({ errors: errors.concat(error) });
 			return false;
 		}else{
@@ -44,6 +50,12 @@ class Register extends Component{
 		}else{
 			return true;
 		}
+	};
+
+	isUsernameValid = ({username}) => {
+		let fdbRefer = firebase.database().ref("users/"+username);
+		console.log('fdbRefer',fdbRefer);
+		return true
 	};
 
 	displayErrors = errors => errors.map((error, i) => <p key={i}>{error.message}</p>);
@@ -101,7 +113,7 @@ class Register extends Component{
 		return(
 			<Grid textAlign="center" verticalAlign="middle" className="app">
 				<Grid.Column style={{ maxWidth: 450}}>
-					<Header as="h2" icon color="purple" textAlign="center">
+					<Header as="h1" icon color="purple" textAlign="center">
 						<Icon name="comments outline" color="purple"/>
 						Register for crazyChat
 					</Header>
