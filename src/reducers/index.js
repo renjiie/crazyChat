@@ -6,6 +6,11 @@ const initialUserState = {
 	isLoading: true
 };
 
+const initialChannelState = {
+	currentChannel: null,
+	isPrivateChannel: false
+};
+
 const userReducer = (state = initialUserState, action) => {
 	switch(action.type){
 		case actionTypes.SET_USER:
@@ -13,13 +18,36 @@ const userReducer = (state = initialUserState, action) => {
 				currentUser: action.payload.currentUser,
 				isLoading: false
 			}
+		case actionTypes.CLEAR_USER:
+			return{
+				...state,
+				isLoading: false
+			}
+		default:
+			return state;
+	}
+};
+
+const channelReducer = (state = initialChannelState, action) => {
+	switch(action.type){
+		case actionTypes.SET_CURRENT_CHANNEL:
+			return{
+				...state,
+				currentChannel: action.payload.currentChannel
+			}
+		case actionTypes.SET_PRIVATE_CHANNEL:
+			return{
+				...state,
+				isPrivateChannel: action.payload.isPrivateChannel
+			}
 		default:
 			return state;
 	}
 };
 
 const rootReducer = combineReducers({
-	user: userReducer
+	user: userReducer,
+	channel: channelReducer
 });
 
 export default rootReducer;
