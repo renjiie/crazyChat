@@ -20,7 +20,21 @@ class Register extends React.Component {
     passwordConfirmation: "",
     errors: [],
     loading: false,
-    usersRef: firebase.database().ref("users")
+    usersRef: firebase.database().ref("users"),
+    loadedUsers:[]
+  };
+
+  componentDidMount(){
+    let loadedUsers = [];
+    this.state.usersRef.on("child_added", snap => {
+      let users = snap.val();
+      loadedUsers.push(users['name']);
+      this.setState({ loadedUsers });
+    })
+  };
+
+  componentWillUnmount(){
+    this.state.usersRef.off();
   };
 
   isFormValid = () => {
@@ -35,7 +49,11 @@ class Register extends React.Component {
       error = { message: "Password is invalid" };
       this.setState({ errors: errors.concat(error) });
       return false;
-    } else {
+    } else if(!this.isUsernameValid(this.state)){
+      error = { message: "Username Already Taken" };
+      this.setState({ errors: errors.concat(error) });
+    }
+    else {
       return true;
     }
   };
@@ -55,6 +73,15 @@ class Register extends React.Component {
     } else if (password !== passwordConfirmation) {
       return false;
     } else {
+      return true;
+    }
+  };
+
+  isUsernameValid = ({ loadedUsers, username }) => {
+    if(loadedUsers.includes(username)){
+      return false;
+    }
+    else{
       return true;
     }
   };
@@ -133,7 +160,7 @@ class Register extends React.Component {
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h1" icon color="orange" textAlign="center">
             <Icon name="puzzle piece" color="orange" />
-            Register for DevChat
+            Register for crazyChat
           </Header>
           <Form onSubmit={this.handleSubmit} size="large">
             <Segment stacked>

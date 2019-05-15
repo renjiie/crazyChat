@@ -14,6 +14,7 @@ import rootReducer from './reducers';
 import { setUser, clearUser } from './actions';
 import Spinner from './Spinner';
 
+
 //To create a global state
 //composedevtools to connect with redux dev tool in the browser extension
 

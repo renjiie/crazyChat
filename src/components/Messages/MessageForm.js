@@ -99,7 +99,7 @@ class MessageForm extends React.Component {
       message["image"] = fileUrl;
     } else {
       const result = sentiment.analyze(this.state.message);
-      
+      console.log(result)
       if(result.score > 0){
         const newMessage = this.colonToUnicode(` ${this.state.message} :smiley: `);
         message["content"] = newMessage ;
@@ -129,7 +129,7 @@ class MessageForm extends React.Component {
         .set(this.createMessage())
         .then(() => {
           this.setState({ loading: false, message: "", errors: [] });
-          typingRef
+        typingRef
             .child(channel.id)
             .child(user.uid)
             .remove();
@@ -160,7 +160,7 @@ class MessageForm extends React.Component {
     const pathToUpload = this.state.channel.id;
     const ref = this.props.getMessagesRef();
     const filePath = `${this.getPath()}/${uuidv4()}.jpg`;
-
+    
     this.setState(
       {
         uploadState: "uploading",
@@ -220,7 +220,7 @@ class MessageForm extends React.Component {
   };
 
   render() {
-    // prettier-ignore
+    
     const { errors, message, loading, modal, uploadState, percentUploaded, emojiPicker } = this.state;
 
     return (

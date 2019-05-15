@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "aylien_textapi": "^0.7.0",
     "emoji-mart": "^2.11.0",
     "firebase": "^6.0.1",
     "md5": "^2.2.1",
@@ -19,8 +18,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.1",
     "sentiment": "^5.0.1",
-    "uuid": "^3.3.2",
-    "watson-developer-cloud": "^4.0.1"
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

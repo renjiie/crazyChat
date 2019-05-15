@@ -13,16 +13,18 @@ const App = ({ currentUser, currentChannel, isPrivateChannel, userPosts }) => (
     
     <SidePanel key={currentUser && currentUser.uid} currentUser={currentUser} />
 
-    <Grid.Column style={{ marginLeft: 320 }}>
+    <Grid.Column style={{ background: '#474748'}}>
+      <div style={{ marginLeft: 320 }}>
       <Messages
         key={currentChannel && currentChannel.id}
         currentChannel={currentChannel}
         currentUser={currentUser}
         isPrivateChannel={isPrivateChannel}
       />
+      </div>
     </Grid.Column>
 
-    <Grid.Column width={4}>
+    <Grid.Column width={4} style={{ background: '#57486f5e'}}>
       <MetaPanel 
         key={currentChannel && currentChannel.id}
         currentChannel={currentChannel}
